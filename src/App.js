@@ -1,61 +1,105 @@
-import Card from './components/Card';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
+import AppContext from './context';
 
-const arr = [
-  { 
-    title: 'Мужские Кроссовки Nike Blazer Mid Suede', 
-    price: 12999, 
-    imageUrl: '/img/sneakers/1.jpg'
-  },
-  { 
-    title: 'Мужские Кроссовки Nike Air Max 270', 
-    price: 15600, 
-    imageUrl: '/img/sneakers/2.jpg'
-  },
-  { 
-    title: 'Мужские Кроссовки Nike Blazer Mid Suede', 
-    price: 8499, 
-    imageUrl: '/img/sneakers/3.jpg'
-  },
-  { 
-    title: 'Кроссовки Puma X Aka Boku Future Rider', 
-    price: 8999, 
-    imageUrl: '/img/sneakers/4.jpg'
-  },
-];
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
+import Orders from './pages/Orders';
+
 
 function App() {
-  return (
-    <div className="wrapper">
-      <Drawer />
-      <Header />
-      <div className="content">
-        <div className="search-wrapper">
-          <h1>Все кроссовки</h1>
-          <div className="search-block">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.25 15.25L11.8855 11.8795L15.25 15.25ZM13.75 7.375C13.75 9.06576 13.0784 10.6873 11.8828 11.8828C10.6873 13.0784 9.06576 13.75 7.375 13.75C5.68424 13.75 4.06274 13.0784 2.86719 11.8828C1.67165 10.6873 1 9.06576 1 7.375C1 5.68424 1.67165 4.06274 2.86719 2.86719C4.06274 1.67165 5.68424 1 7.375 1C9.06576 1 10.6873 1.67165 11.8828 2.86719C13.0784 4.06274 13.75 5.68424 13.75 7.375V7.375Z" stroke="#E4E4E4" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <input placeholder="Поиск..."/>
-          </div>
-        </div>
+  const [items, setItems] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
+  const [favorites, setFavorites] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState('');
+  const [cartOpened, setCartOpened] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-        <div className="sneakers">
-          
-          {
-            arr.map((obj) => (
-              <Card 
-                title={obj.title} 
-                price={obj.price} 
-                imageUrl={obj.imageUrl}
-              />
-            ))
-            
-          }
+  React.useEffect(() => {
+    async function fetchData() {
+      const cartResponse = await axios.get('https://639b1552d5141501974a8543.mockapi.io/cart');
+      const favoritesResponse = await axios.get('https://639b1552d5141501974a8543.mockapi.io/favorites');
+      const itemsResponse = await axios.get('https://639b1552d5141501974a8543.mockapi.io/items');
+    
+      setIsLoading(false);
+
+      setCartItems(cartResponse.data);
+      setFavorites(favoritesResponse.data);
+      setItems(itemsResponse.data);
+    }
+
+    fetchData();
+  }, []);
+
+  const onAddToCart = async (obj) => {
+    try {
+      if (cartItems.find((cartObj) => Number(cartObj.id) === Number(obj.id))) {
+        axios.delete(`https://639b1552d5141501974a8543.mockapi.io/cart/${obj.id}`);
+        setCartItems((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
+      } else {
+        const { data } = await axios.post('https://639b1552d5141501974a8543.mockapi.io/cart', obj);
+        setCartItems((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert('Не удалось добавить в корзину')
+    }
+
+    
+  }
+
+  const onRemoveItem = (id) => {
+    axios.delete(`https://639b1552d5141501974a8543.mockapi.io/cart/${id}`);
+    setCartItems((prev) => prev.filter(item => item.id !== id));
+  }
+
+  const onAddToFavorite = async (obj) => {
+    try {
+      if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
+        axios.delete(`https://639b1552d5141501974a8543.mockapi.io/favorites/${obj.id}`);
+        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
+      } else {
+        const { data } = await axios.post('https://639b1552d5141501974a8543.mockapi.io/favorites', obj);
+        setFavorites((prev) => [...prev, data]);
+      };
+    } catch(error) {
+      alert('Не удалось добавить в закладки')
+    }
+  }
+
+  const onChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  }
+
+  const isItemAdded = (id) => {
+    return cartItems.some(obj => Number(obj.id) === Number(id));
+  }
+
+  return (
+    <AppContext.Provider value={{ items, cartItems, favorites, isItemAdded, onAddToCart, onAddToFavorite, setCartOpened, setCartItems }}>
+      <div className="wrapper">
+        {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
+        <Header onClickCart={() => setCartOpened(true)} />
+        <div className='content'>
+          <Routes>
+            <Route path='*' element={<Home 
+              items={items}
+              cartItems={cartItems}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onChangeSearchInput={onChangeSearchInput}
+              onAddToFavorite={onAddToFavorite}
+              onAddToCart={onAddToCart}
+              isLoading={isLoading}
+            />}></Route>
+            <Route path='/favorites' element={<Favorites />}></Route>
+            <Route path='/orders' element={<Orders />}></Route>
+          </Routes>
         </div>
       </div>
-    </div>
+    </AppContext.Provider>
   );
 }
 
