@@ -113,7 +113,7 @@ function App() {
         <Header onClickCart={() => setCartOpened(true)} />
         <div className='content'>
           <Routes>
-            <Route path='' element={<Home 
+            <Route path={process.env.PUBLIC_URL + '/'} element={<Home 
               items={items}
               cartItems={cartItems}
               searchValue={searchValue}
@@ -123,8 +123,8 @@ function App() {
               onAddToCart={onAddToCart}
               isLoading={isLoading}
             />}></Route>
-            <Route path='/favorites' element={<Favorites />}></Route>
-            <Route path='/orders' element={<Orders />}></Route>
+            <Route path={process.env.PUBLIC_URL + '/favorites'} element={<Favorites />}></Route>
+            <Route path={process.env.PUBLIC_URL + '/orders'} element={<Orders />}></Route>
           </Routes>
         </div>
       </div>

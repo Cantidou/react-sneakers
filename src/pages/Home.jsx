@@ -23,7 +23,7 @@ function Home({items, searchValue, setSearchValue, onChangeSearchInput, onAddToF
               <div className="search-wrapper">
                 <h1>{searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все кроссовки'}</h1>
                 <div className="search-block">
-                  <img width={16} height={16} src='/img/search.svg' alt='Поиск'/>
+                  <img width={16} height={16} src='./img/search.svg' alt='Поиск'/>
                   <input onChange={onChangeSearchInput} value={searchValue} placeholder="Поиск..."/>
                   {searchValue && <svg onClick={() => setSearchValue('')} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="white" stroke="#DBDBDB"/>
