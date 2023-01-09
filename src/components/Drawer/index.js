@@ -79,7 +79,7 @@ function Drawer({onClose, onRemove, items = [], opened }) {
                                 </li>
                             </ul>
                             <button disabled={isLoading} onClick={onClickOrder} className="greenButton">
-                                Оформить заказ<img src="./img/arrow.svg" alt="arrow"/>
+                                Оформить заказ<img src="img/arrow.svg" alt="arrow"/>
                             </button>
                         </div>
                     </div>
@@ -87,7 +87,7 @@ function Drawer({onClose, onRemove, items = [], opened }) {
                     <Info 
                         title={isOrderComplete ? "Заказ оформлен" : "Корзина пустая"} 
                         discription={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."} 
-                        image={isOrderComplete ? "./img/complete-order.png" : "./img/empty-cart.png"} 
+                        image={isOrderComplete ? "img/complete-order.png" : "img/empty-cart.png"} 
                     /> 
                 )}
             </div>
