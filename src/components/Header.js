@@ -8,9 +8,9 @@ function Header(props) {
 
     return (
         <header>
-            <Link to="/react-sneakers">
+            <Link to="/">
                 <div className="headerLeft">
-                    <img width={40} height={40} src="img/logo.png" alt="Logo"/>
+                    <img width={40} height={40} src="/img/logo.png" alt="Logo"/>
                     <div>
                         <h3>React Sneakers</h3>
                         <p>Магазин лучших кросовок</p>
@@ -19,7 +19,7 @@ function Header(props) {
             </Link>
             <ul className="headerRight">
                 <li onClick={props.onClickCart}>
-                    <img className='cart' width={18} height={18} src='img/cart.svg' alt="Корзина"/>
+                    <img className='cart' width={18} height={18} src='/img/cart.svg' alt="Корзина"/>
                     <span>{totalPrice} руб.</span>
                 </li>
                     <li>
