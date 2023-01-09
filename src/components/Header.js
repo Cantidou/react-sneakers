@@ -8,7 +8,7 @@ function Header(props) {
 
     return (
         <header>
-            <Link to="/">
+            <Link to="/react-sneakers">
                 <div className="headerLeft">
                     <img width={40} height={40} src="./img/logo.png" alt="Logo"/>
                     <div>
