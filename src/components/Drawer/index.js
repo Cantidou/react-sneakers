@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
 
-import Info from "./info";
-import { useCart } from "../hooks/useCart";
+import Info from "../info";
+import { useCart } from "../../hooks/useCart";
+
+import styles from "./Drawer.module.scss";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Drawer({onClose, onRemove, items = [] }) {
+function Drawer({onClose, onRemove, items = [], opened }) {
     const { cartItems, setCartItems, totalPrice} = useCart();
     const [orderId, setOrderId] = React.useState(null);
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
@@ -33,8 +35,8 @@ function Drawer({onClose, onRemove, items = [] }) {
     };
 
     return (
-        <div className="overlay">
-            <div className="drawer">
+        <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+            <div className={`${styles.drawer}`}>
                 <h2>
                 Корзина
                 <svg onClick={onClose} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

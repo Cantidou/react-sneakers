@@ -1,10 +1,8 @@
 import axios from "axios";
 import React from "react";
 import Card from "../components/Card";
-import AppContext from "../context";
 
 function Orders() {
-  const { onAddToCart, onAddToFavorite } = React.useContext(AppContext);
   const [ orders, setOrders ] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -28,15 +26,9 @@ function Orders() {
               </div>
               <div className="sneakers">
                 {
-                  orders.map((item, index) => (
-                      <Card             
-                      key={index}
-                      onFavorite={(obj) => onAddToFavorite(obj)}
-                      onPlus={(obj) => onAddToCart(obj)}
-                      loading={isLoading}
-                      {...item}/>
+                 (isLoading ? [...Array(8)] : orders).map((item, index) => (
+                      <Card key={index} loading={isLoading} {...item}/>
                   ))
-                  
                 }
               </div>
             </div>

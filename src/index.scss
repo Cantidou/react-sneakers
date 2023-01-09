@@ -126,94 +126,6 @@ header {
   }
 }
 
-.overlay {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1
-}
-
-.drawer {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  width: 385px;
-  right: 0;
-  height: 100%;
-
-  background: #FFFFFF;
-  box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-
-  padding: 30px;
-
-  h2 {
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-
-    svg {
-      cursor: pointer;
-    }
-  }
-
-  .itemsContainer {
-    display: flex;
-    flex-direction: column;
-
-    height: 100%;
-
-    .items {
-      flex: 1 0 auto;
-      overflow: auto;
-      margin-bottom: 40px;
-    }
-  }
-
-  .cartEmpty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    flex: 1 0 auto;
-
-    text-align: center;
-
-    .greenButton {
-      width: 245px;
-      margin-top: 20px;
-
-      &:hover {
-        .buttonImg {
-          transform: rotate(180deg) translateX(3px);
-        }
-      }
-
-      .buttonImg {
-        position: relative;
-        top: 1px;
-        transform: rotate(180deg);
-        margin-right: 15px;
-        transition: transform 0.15s ease-in-out;
-      }
-    }
-
-    .cartImg {
-      margin-bottom: 20px;
-    }
-
-    p {
-      width: 280px;
-      line-height: 24px;
-      opacity: 0.6;
-    }
-  }
-
-
-}
-
 .cartTotalBlock {
   ul {
     margin-bottom: 40px;
@@ -322,6 +234,45 @@ header {
     &:hover {
       opacity: 1;
     }
+  }
+}
+
+.cartEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1 0 auto;
+
+  text-align: center;
+
+  .greenButton {
+    width: 245px;
+    margin-top: 20px;
+
+    &:hover {
+      .buttonImg {
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    .buttonImg {
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+
+  .cartImg {
+    margin-bottom: 20px;
+  }
+
+  p {
+    width: 280px;
+    line-height: 24px;
+    opacity: 0.6;
   }
 }
 

@@ -6,11 +6,11 @@ const Info = ({ title, image, discription }) => {
 
     return (
         <div className="cartEmpty">
-            <img className="cartImg" width={120} src={image}  />
+            <img className="cartImg" width={120} src={image} alt="cart"/>
             <h2>{title}</h2>
             <p>{discription}</p>
             <button onClick={() => setCartOpened(false)} className="greenButton">
-                <img className="buttonImg" src={"/img/arrow.svg"}/>
+                <img className="buttonImg" src={"/img/arrow.svg"} alt="arrow"/>
                 Вернуться назад
             </button>
         </div> 
