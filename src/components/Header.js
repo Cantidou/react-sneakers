@@ -10,7 +10,7 @@ function Header(props) {
         <header>
             <Link to="/">
                 <div className="headerLeft">
-                    <img width={40} height={40} src="/img/logo.png" alt="Logo"/>
+                    <img width={40} height={40} src="./img/logo.png" alt="Logo"/>
                     <div>
                         <h3>React Sneakers</h3>
                         <p>Магазин лучших кросовок</p>
@@ -24,12 +24,12 @@ function Header(props) {
                 </li>
                     <li>
                         <Link to="/favorites">
-                            <img width={18} height={18} src="/img/favorite.svg" alt="Закладки" />
+                            <img width={18} height={18} src="./img/favorite.svg" alt="Закладки" />
                         </Link>
                     </li>
                 <li>
                     <Link to="/orders">
-                            <img width={18} height={18} src="/img/user.svg" alt="Пользователь" />
+                            <img width={18} height={18} src="./img/user.svg" alt="Пользователь" />
                     </Link>
                 </li>
             </ul>
