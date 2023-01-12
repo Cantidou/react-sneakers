@@ -9,11 +9,6 @@ import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Orders from "./pages/Orders";
 
-//Для освобождения mockapi
-import itemsResponse from "./db/items.json";
-import cartResponse from "./db/cart.json";
-import favoritesResponse from "./db/favorites.json";
-
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
@@ -25,17 +20,23 @@ function App() {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        // const [cartResponse, favoritesResponse, itemsResponse] =
-        //   await Promise.all([
-        //     axios.get("https://639b1552d5141501974a8543.mockapi.io/cart"),
-        //     axios.get("https://639b1552d5141501974a8543.mockapi.io/favorites"),
-        //     axios.get("https://639b1552d5141501974a8543.mockapi.io/items"),
-        //   ]);
+        const [cartResponse, favoritesResponse, itemsResponse] =
+          await Promise.all([
+            axios.get(
+              "https://my-json-server.typicode.com/Cantidou/json-server/cart"
+            ),
+            axios.get(
+              "https://my-json-server.typicode.com/Cantidou/json-server/favorites"
+            ),
+            axios.get(
+              "https://my-json-server.typicode.com/Cantidou/json-server/items"
+            ),
+          ]);
 
         setIsLoading(false);
-        setCartItems(cartResponse); //.data
-        setFavorites(favoritesResponse); //.data
-        setItems(itemsResponse); //.data
+        setCartItems(cartResponse.data);
+        setFavorites(favoritesResponse.data);
+        setItems(itemsResponse.data);
       } catch (error) {
         alert("Ошибка при запросе данных");
         console.error(error);
@@ -52,7 +53,7 @@ function App() {
       );
       if (findItem) {
         await axios.delete(
-          `https://639b1552d5141501974a8543.mockapi.io/cart/${findItem.id}`
+          `https://my-json-server.typicode.com/Cantidou/json-server/cart/${findItem.id}`
         );
         setCartItems((prev) =>
           prev.filter((item) => Number(item.parentId) !== Number(obj.id))
@@ -60,7 +61,7 @@ function App() {
       } else {
         setCartItems((prev) => [...prev, obj]);
         const { data } = await axios.post(
-          "https://639b1552d5141501974a8543.mockapi.io/cart",
+          "https://my-json-server.typicode.com/Cantidou/json-server/cart",
           obj
         );
         setCartItems((prev) =>
@@ -83,7 +84,9 @@ function App() {
 
   const onRemoveItem = (id) => {
     try {
-      axios.delete(`https://639b1552d5141501974a8543.mockapi.io/cart/${id}`);
+      axios.delete(
+        `https://my-json-server.typicode.com/Cantidou/json-server/cart/${id}`
+      );
       setCartItems((prev) =>
         prev.filter((item) => Number(item.id) !== Number(id))
       );
@@ -97,14 +100,14 @@ function App() {
     try {
       if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
         axios.delete(
-          `https://639b1552d5141501974a8543.mockapi.io/favorites/${obj.id}`
+          `https://my-json-server.typicode.com/Cantidou/json-server/favorites/${obj.id}`
         );
         setFavorites((prev) =>
           prev.filter((item) => Number(item.id) !== Number(obj.id))
         );
       } else {
         const { data } = await axios.post(
-          "https://639b1552d5141501974a8543.mockapi.io/favorites",
+          "https://my-json-server.typicode.com/Cantidou/json-server/favorites",
           obj
         );
         setFavorites((prev) => [...prev, data]);

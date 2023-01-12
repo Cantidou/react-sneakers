@@ -3,9 +3,6 @@ import React from "react";
 import Card from "../components/Card";
 import Info from "../components/info";
 
-//для освобождения mockapi
-import ordersDB from "../db/orders.json";
-
 function Orders() {
   const [orders, setOrders] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -13,10 +10,9 @@ function Orders() {
   React.useEffect(() => {
     (async () => {
       try {
-        // const { data } = await axios.get(
-        //   "https://639b1552d5141501974a8543.mockapi.io/orders"
-        // );
-        const data = ordersDB;
+        const { data } = await axios.get(
+          "https://my-json-server.typicode.com/Cantidou/json-server/orders"
+        );
 
         setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
         setIsLoading(false);
