@@ -1,0 +1,16 @@
+[
+    {
+     "id": "1",
+     "parentId": 2,
+     "title": "Мужские Кроссовки Nike Air Max 270",
+     "imageUrl": "./img/sneakers/2.jpg",
+     "price": 15600
+    },
+    {
+     "id": "2",
+     "parentId": 7,
+     "title": "Мужские Кроссовки Jordan Air Jordan 11",
+     "imageUrl": "./img/sneakers/7.jpg",
+     "price": 10799
+    }
+   ]
